@@ -17,7 +17,10 @@ import com.gkzxhn.ywt_gkzx.R;
 import java.util.List;
 
 import static android.R.attr.handle;
+import static android.R.attr.targetActivity;
 import static android.media.CamcorderProfile.get;
+import static com.gkzxhn.ywt_gkzx.R.drawable.c;
+import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -28,6 +31,7 @@ import static java.lang.Integer.parseInt;
 public class MyAdapter extends ArrayAdapter<Goods> {
     public Context context;
     private ViewHolder viewHolder;
+    public TextView totalMoney;
 
     public List<Goods> list;
 
@@ -48,10 +52,11 @@ public class MyAdapter extends ArrayAdapter<Goods> {
     }
 
 
-    public MyAdapter(Context context, int resource, List<Goods> list) {
+    public MyAdapter(Context context, int resource, List<Goods> list ,TextView tv) {
         super(context, resource);
         this.context = context;
         this.list = list;
+        this.totalMoney = tv;
     }
 
     @Override
@@ -85,10 +90,21 @@ public class MyAdapter extends ArrayAdapter<Goods> {
             DatabaseHelper databaseHelper = new DatabaseHelper(context);
             @Override
             public void onClick(View v) {
-                int num = goods.getNum()-1;
-                goods.setNum(num);
-                databaseHelper.updateAGoods(goods);
-                notifyDataSetChanged();
+                if(!(goods.getNum()==0)){
+                    int num = goods.getNum()-1;
+                    goods.setNum(num);
+                    databaseHelper.updateAGoods(goods);
+                    //当有数据变化时刷新UI
+                    notifyDataSetChanged();
+
+                    //totalMoney是电子商务模块fragment通过adapter适配器传进来的购物车内商品总价（合计的实例对象）。
+                    float total = Float.parseFloat((String)totalMoney.getText());
+                    float money = total - Float.parseFloat(goods.getPrice());
+                    totalMoney.setText(String.valueOf(money));
+                }else{
+                    //如果所选商品为空（数目为零），当点击减号时，弹出一下提示。
+                    Toast.makeText(context,"您所选商品为空！",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -102,8 +118,13 @@ public class MyAdapter extends ArrayAdapter<Goods> {
                 int num = goods.getNum()+1;
                 goods.setNum(num);
                 databaseHelper.updateAGoods(goods);
-                //当有数据变化时，通知ListView刷新UI
+                //当有数据变化时，刷新UI
                 notifyDataSetChanged();
+
+                //totalMoney是电子商务模块fragment通过adapter适配器传进来的购物车内商品总价（合计的实例对象）。
+                float total = Float.parseFloat((String)totalMoney.getText());
+                float money = total + Float.parseFloat(goods.getPrice());
+                totalMoney.setText(String.valueOf(money));
             }
         });
         Log.e("adapter", "666666666666");

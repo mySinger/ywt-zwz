@@ -53,6 +53,7 @@ public class CanteenFragment extends Fragment implements View.OnClickListener {
     private View view;
     private DatabaseHelper databaseHelper;
     private SharedPreferences sp;
+    private TextView totalMoney;
 
     public CanteenFragment() {
     }
@@ -98,17 +99,17 @@ public class CanteenFragment extends Fragment implements View.OnClickListener {
         myList.add(new Goods("寿比南山杯", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
                 "走过路过不要错过，各位顾客请慢走！", "66", R.drawable.beizi2, 0));
         myList.add(new Goods("斯坦科维奇杯", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
-                "走过路过不要错过，各位顾客请慢走！", "666", R.drawable.beizi3, 0));
+                "走过路过不要错过，各位顾客请慢走！", "6", R.drawable.beizi3, 0));
         myList.add(new Goods("世界杯", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
-                "走过路过不要错过，各位顾客请慢走！", "6666", R.drawable.beizi4, 0));
+                "走过路过不要错过，各位顾客请慢走！", "66", R.drawable.beizi4, 0));
         myList.add(new Goods("万事如意杯", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
-                "走过路过不要错过，各位顾客请慢走！", "6", R.drawable.beizi1, 89));
+                "走过路过不要错过，各位顾客请慢走！", "6", R.drawable.beizi1, 0));
         myList.add(new Goods("寿比南山杯", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
-                "走过路过不要错过，各位顾客请慢走！", "66", R.drawable.beizi2, 89));
+                "走过路过不要错过，各位顾客请慢走！", "66", R.drawable.beizi2, 0));
         myList.add(new Goods("斯坦科维奇杯", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
-                "走过路过不要错过，各位顾客请慢走！", "666", R.drawable.beizi3, 89));
+                "走过路过不要错过，各位顾客请慢走！", "6", R.drawable.beizi3, 0));
         myList.add(new Goods("世界杯", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
-                "走过路过不要错过，各位顾客请慢走！", "6666", R.drawable.beizi4, 89));
+                "走过路过不要错过，各位顾客请慢走！", "66", R.drawable.beizi4, 0));
 
         databaseHelper = new DatabaseHelper(getActivity());
         sp = getActivity().getSharedPreferences("APPData",MODE_PRIVATE);
@@ -124,8 +125,11 @@ public class CanteenFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(),sp.getBoolean("goodsIsFirst",false)+"",Toast.LENGTH_LONG).show();
         }
 
+        //拿到与该fragment相关联的activity中的合计的实例对象。
+        totalMoney = (TextView) getActivity().findViewById(R.id.total_money);
+
         ListView canteenLv = (ListView) view.findViewById(R.id.canteen_fragment_lv);
-        MyAdapter myAdapter = new MyAdapter(getActivity(), R.layout.item_shopping_content, databaseHelper.readAllGoods());
+        MyAdapter myAdapter = new MyAdapter(getActivity(), R.layout.item_shopping_content, databaseHelper.readAllGoods(), totalMoney);
         canteenLv.setAdapter(myAdapter);
     }
 
