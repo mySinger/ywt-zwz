@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:text="可远程探监次数：0次"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/visit_recharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bt_shape"
+            android:text="充值"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_meeting_last_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="上次会见时间：暂无会见"
+            android:textColor="@color/tv_mid"
+            android:textSize="@dimen/last_meeting_time" />
+
+        <TextView
+            android:id="@+id/tv_meeting_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_meeting_last_time"
+            android:background="@color/white"
+            android:lineSpacingExtra="3dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="@string/meeting_note"
+            android:textColor="@color/tv_mid"
+            android:textSize="@dimen/last_meeting_time" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_meeting_request_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_meeting_notes"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名："
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+
+            <TextView
+                android:id="@+id/tv_meeting_request_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="叶惠美"
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="与服刑人员关系："
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+
+            <TextView
+                android:id="@+id/tv_meeting_request_relationship"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="母子"
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身份证号："
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+
+            <TextView
+                android:id="@+id/tv_meeting_request_id_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="430482199404074444"
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电话号码："
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+
+            <TextView
+                android:id="@+id/tv_meeting_request_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="18888888888"
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="申请会见时间："
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+
+            <TextView
+                android:id="@+id/time_visit_apply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-08-22"
+                android:textColor="@color/tv_bg"
+                android:textSize="@dimen/meeting_info_tv_size" />
+
+            <Button
+                android:id="@+id/set_apply_time_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/bt_shape"
+                android:text="点击选择" />
+        </LinearLayout>
+
+        <Button
+            android:layout_marginBottom="10dp"
+            android:id="@+id/bt_visit_apply"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/theme_bg_bt_selector"
+            android:text="申请探监"
+            android:textColor="#000000"
+            android:textSize="@dimen/replay_bt_size" />
+    </LinearLayout>
+
+</LinearLayout>

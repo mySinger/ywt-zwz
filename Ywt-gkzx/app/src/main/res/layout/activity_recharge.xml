@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    tools:context=".activity.RechargeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/title_recharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingTop="20dp"
+            android:text="充值"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/recharge_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/title_recharge"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@id/title_recharge"
+            android:layout_centerVertical="true"
+            android:paddingTop="20dp"
+            android:src="@drawable/back" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="15dp"
+        android:text="请选择充值金额"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/money_one"
+            android:background="@color/white"
+            style="@style/recharge_style"
+            android:text="5元" />
+
+        <RadioButton
+            android:id="@+id/money_two"
+            android:layout_marginLeft="2dp"
+            android:background="@color/white"
+            style="@style/recharge_style"
+            android:text="20元"/>
+
+        <RadioButton
+            android:id="@+id/money_three"
+            android:layout_marginLeft="2dp"
+            android:background="@color/white"
+            style="@style/recharge_style"
+            android:text="50元" />
+
+        <RadioButton
+            android:id="@+id/money_four"
+            android:layout_marginLeft="2dp"
+            android:background="@color/white"
+            style="@style/recharge_style"
+            android:text="100元"
+            />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_recharge"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="充值"
+        android:textSize="16sp"
+        android:background="@drawable/btn_bg_shape"/>
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/recharge_instructions"
+        android:lineSpacingExtra="5dp"
+        />
+
+</LinearLayout>

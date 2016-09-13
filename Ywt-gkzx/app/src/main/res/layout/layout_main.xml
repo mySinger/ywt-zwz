@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/headpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingTop="20dp"
+            android:text="首页"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@id/headpager"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@id/headpager"
+            android:layout_centerVertical="true"
+            android:paddingTop="20dp"
+            android:src="@drawable/avatar_def" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_contain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_settlement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:padding="5dp"
+                    android:src="@drawable/buycar" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="合计："
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="元"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="(含配送费2元)" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <!--settlement:结算-->
+        <Button
+            android:id="@+id/settlement"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/orange_bg"
+            android:text="结算" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/ll_rbtn_contain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0.6"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_first"
+            style="@style/tab_style"
+            android:drawableTop="@drawable/tab_first_bankground"
+            android:text="首页"
+            android:textColor="@drawable/radio_colors" />
+
+        <RadioButton
+            android:id="@+id/rb_second"
+            style="@style/tab_style"
+            android:drawableTop="@drawable/tab_secend_bankground"
+            android:text="探监"
+            android:textColor="@drawable/radio_colors" />
+
+        <RadioButton
+            android:id="@+id/rb_thrid"
+            style="@style/tab_style"
+            android:drawableTop="@drawable/tab_thrid_bankground"
+            android:text="电子商务"
+            android:textColor="@drawable/radio_colors" />
+    </RadioGroup>
+
+
+</LinearLayout>

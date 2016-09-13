@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="手机号码："
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_phone_number"
+            android:padding="15dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:layout_toRightOf="@id/number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入手机号码"
+            android:inputType="number"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/id_number"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="身份证号码："
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_id_card"
+            android:padding="15dp"
+            android:singleLine="true"
+            android:background="@null"
+            android:layout_toRightOf="@id/id_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入身份证号码"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_weight="2"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/et_verification_code"
+            android:padding ="15dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="输入验证码"
+            android:inputType="number"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:layout_alignBottom="@id/et_verification_code"
+            android:layout_alignParentRight="true"
+            android:id="@+id/bt_security"
+            android:layout_marginLeft="2dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bt_shape"
+            android:hint="获取验证码"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_person_dl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bt_shape"
+        android:text="登录"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:textSize="18sp"
+            android:id="@+id/bt_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bt_shape"
+            android:text="注册" />
+
+        <Button
+            android:padding="5dp"
+            android:id="@+id/no_account_login"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bt_shape"
+            android:text="无账号快捷登录" />
+    </RelativeLayout>
+
+</LinearLayout>

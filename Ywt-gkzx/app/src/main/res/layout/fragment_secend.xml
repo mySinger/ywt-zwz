@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/visit_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+
+            <RadioButton
+                android:id="@+id/visit_rb1"
+                style="@style/tab_style"
+                android:layout_marginLeft="30dp"
+                android:drawableLeft="@drawable/remote_selector"
+                android:text="远程探监"
+                android:textColor="@drawable/radio_colors" />
+
+            <RadioButton
+                android:layout_marginLeft="30dp"
+                android:id="@+id/visit_rb2"
+                style="@style/tab_style"
+                android:drawableLeft="@drawable/visit_selector"
+                android:text="实地探监"
+                android:textColor="@drawable/radio_colors" />
+        </RadioGroup>
+    </LinearLayout>
+
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/visit_fl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp">
+
+        </FrameLayout>
+    </ScrollView>
+
+
+</LinearLayout>

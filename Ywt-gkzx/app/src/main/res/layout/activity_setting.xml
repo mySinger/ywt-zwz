@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/theme"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingTop="20dp"
+            android:text="设置"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/item_selector">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/gray_clock" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:gravity="center_vertical"
+            android:text="闹钟提醒"
+            android:textColor="@color/tv_bg"
+            android:textSize="16dp" />
+
+        <com.zcw.togglebutton.ToggleButton
+            android:id="@+id/clock_switch"
+            android:layout_width="65dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            toggle:tbBorderWidth="2dp"
+            toggle:tbOffBorderColor="#000"
+            toggle:tbOffColor="#ddd"
+            toggle:tbOnColor="#f00"
+            toggle:tbSpotColor="#00f"></com.zcw.togglebutton.ToggleButton>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/item_selector"
+        android:layout_marginTop="2dp" >
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/gray_pwd_setting"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:text="独立密码设置"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/tv_bg"/>
+
+        <com.zcw.togglebutton.ToggleButton
+            android:id="@+id/password_setting"
+            android:layout_width="65dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            toggle:tbBorderWidth="2dp"
+            toggle:tbOffBorderColor="#000"
+            toggle:tbOffColor="#ddd"
+            toggle:tbOnColor="#f00"
+            toggle:tbSpotColor="#00f"></com.zcw.togglebutton.ToggleButton>
+    </RelativeLayout>
+
+
+</LinearLayout>
