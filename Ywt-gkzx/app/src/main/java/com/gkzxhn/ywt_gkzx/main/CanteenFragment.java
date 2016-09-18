@@ -125,11 +125,14 @@ public class CanteenFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(),sp.getBoolean("goodsIsFirst",false)+"",Toast.LENGTH_LONG).show();
         }
 
-        //拿到与该fragment相关联的activity中的合计的实例对象。
+        //拿到与该fragment相关联的activtiy中的购物车内商品数量对象，将导传入适配器中。
+        TextView buyCar_num = (TextView) getActivity().findViewById(R.id.buyCar_num);
+
+        //拿到与该fragment相关联的activity中的合计的实例对象，将其导入适配器中。
         totalMoney = (TextView) getActivity().findViewById(R.id.total_money);
 
         ListView canteenLv = (ListView) view.findViewById(R.id.canteen_fragment_lv);
-        MyAdapter myAdapter = new MyAdapter(getActivity(), R.layout.item_shopping_content, databaseHelper.readAllGoods(), totalMoney);
+        MyAdapter myAdapter = new MyAdapter(getActivity(), R.layout.item_shopping_content, databaseHelper.readAllGoods(), totalMoney, buyCar_num);
         canteenLv.setAdapter(myAdapter);
     }
 
@@ -177,5 +180,20 @@ public class CanteenFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        clearDatabase();
+    }
+
+    /**
+     * 每次重启APP时，清理数据库中原有的商品数据信息，将数据还原成初始状态
+     */
+
+    private void clearDatabase(){
+        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+        databaseHelper.clearNum(databaseHelper.readAllGoods());
     }
 }

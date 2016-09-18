@@ -65,6 +65,7 @@
         <activity android:name=".activity.NewsOneActivity"></activity>
         <activity android:name=".activity.NewsTwoActivity"></activity>
         <activity android:name=".activity.NewsThreeActivity"></activity>
+        <activity android:name=".activity.BuyCarActivity"></activity>
         <activity android:name=".Splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

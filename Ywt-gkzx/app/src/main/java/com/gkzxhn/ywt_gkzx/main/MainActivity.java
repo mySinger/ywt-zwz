@@ -13,10 +13,13 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
+import com.gkzxhn.ywt_gkzx.activity.BuyCarActivity;
 import com.gkzxhn.ywt_gkzx.activity.PayActivity;
 import com.gkzxhn.ywt_gkzx.login.LoginActivity;
 import com.gkzxhn.ywt_gkzx.main_activity.AccountInformationActivity;
@@ -25,6 +28,11 @@ import com.gkzxhn.ywt_gkzx.main_activity.SettingActivity;
 import com.gkzxhn.ywt_gkzx.main_activity.ShoppingRecordActivity;
 import com.gkzxhn.ywt_gkzx.utils.BaseActivity;
 import com.gkzxhn.ywt_gkzx.utils.CustomDialog;
+import com.gkzxhn.ywt_gkzx.utils.DatabaseHelper;
+import com.gkzxhn.ywt_gkzx.utils.Goods;
+import com.gkzxhn.ywt_gkzx.utils.MyAdapter;
+
+import java.util.List;
 
 import static android.R.attr.tag;
 import static com.gkzxhn.ywt_gkzx.R.drawable.menu_setting;
@@ -34,6 +42,8 @@ import static com.gkzxhn.ywt_gkzx.R.drawable.tab_first_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.tab_secend_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.tab_thrid_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.user_info;
+import static com.gkzxhn.ywt_gkzx.R.id.buyCar_num;
+import static com.gkzxhn.ywt_gkzx.R.id.main;
 import static com.gkzxhn.ywt_gkzx.R.id.rb_first;
 import static com.gkzxhn.ywt_gkzx.R.id.settlement;
 import static com.gkzxhn.ywt_gkzx.R.id.tv_agreement;
@@ -63,6 +73,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
 
     private String TAG;
     private TextView settlement;
+    private ImageView buyCar;
+    private TextView buyCar_num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +99,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
         //获取自定义对话框对象
         customDialog = new CustomDialog(this);
 
-        mainLayout = (ViewGroup) findViewById(R.id.main);
+        mainLayout = (ViewGroup) findViewById(main);
 
         mRBtnFrist = (RadioButton) mainLayout.findViewById(rb_first);
 
@@ -121,8 +133,15 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
             //如果跳转的下一个活动，如果有 intent.getExtras()接受上一个活动的数据，那么上一个活动必须有intent.putExtra()方法。
             case R.id.settlement:
                 Intent intent = new Intent(this, PayActivity.class);
-                intent.putExtra("money", "20元");
-                startActivity(intent);
+                TextView totalMoney = (TextView) findViewById(R.id.total_money);
+                intent.putExtra("money", totalMoney.getText() + "元");
+                //在跳转到结算界面的同时，将所选商品清零
+                DatabaseHelper databaseHelper = new DatabaseHelper(this);
+                List<Goods> list = databaseHelper.readAllGoods();
+                databaseHelper.clearNum(list);
+
+                //要求activity有返回值
+                startActivityForResult(intent, 0);
                 break;
             case R.id.btn_back:
                 slideMenu.switchMenu();
@@ -165,9 +184,40 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
                     }
                 });
                 break;
+            case R.id.buycar:
+                //跳转至购物车内容详情页面
+                Intent intent_buyCar = new Intent(MainActivity.this, BuyCarActivity.class);
+                startActivity(intent_buyCar);
+
+                break;
         }
     }
 
+    /**
+     * 从电子商务模块进入结算模块，使用startActivityForResult(),要求activity有返回值。
+     * 当resultCode为1时，从结算界面返回。
+     * 当点击结算，放弃支付时，重新返回购物页面，此时需将所选商品和合计价格清零。
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case 1:
+                TextView buyCar_num = (TextView) findViewById(R.id.buyCar_num);
+                buyCar_num.setText("0");
+                TextView totalMoney = (TextView) findViewById(R.id.total_money);
+                totalMoney.setText("0.00");
+
+                DatabaseHelper databaseHelper = new DatabaseHelper(this);
+                ListView canteenLv = (ListView) findViewById(R.id.canteen_fragment_lv);
+                MyAdapter myAdapter = new MyAdapter(this, R.layout.item_shopping_content,
+                        databaseHelper.readAllGoods(), totalMoney, buyCar_num);
+                canteenLv.setAdapter(myAdapter);
+
+                break;
+
+        }
+    }
 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -253,6 +303,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
      * 调整底部RadioButton的大小
      */
     public void initView() {
+        //拿到购物车内商品总数对象
+        buyCar_num = (TextView) findViewById(R.id.buyCar_num);
+
+        //拿到购物车对象,并设置点击监听
+        buyCar = (ImageView) findViewById(R.id.buycar);
+        buyCar.setOnClickListener(this);
+
         //结算按钮
         settlement = (TextView) findViewById(R.id.settlement);
         settlement.setOnClickListener(this);

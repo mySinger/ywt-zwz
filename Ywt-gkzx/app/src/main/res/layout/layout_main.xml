@@ -59,11 +59,23 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/buycar"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerInParent="true"
                     android:padding="5dp"
                     android:src="@drawable/buycar" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/buyCar_num"
+                    android:textColor="#ffffff"
+                    android:textSize="6sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:text="0"
+                    android:background="@drawable/buycar_shape"/>
             </RelativeLayout>
 
 

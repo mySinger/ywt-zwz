@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.gkzxhn.ywt_gkzx.R;
 import com.gkzxhn.ywt_gkzx.login.LoginActivity;
+import com.gkzxhn.ywt_gkzx.utils.DatabaseHelper;
 
 
 /**
@@ -34,6 +35,7 @@ public class StartActivity extends Activity {
         //将系统状态栏设为透明
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         setContentView(R.layout.activity_start);
+        //延时三十秒发送一个空消息
         handler.sendEmptyMessageDelayed(0,3000);
     }
 }

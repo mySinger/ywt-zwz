@@ -32,6 +32,7 @@ public class MyAdapter extends ArrayAdapter<Goods> {
     public Context context;
     private ViewHolder viewHolder;
     public TextView totalMoney;
+    private TextView bc_num;
 
     public List<Goods> list;
 
@@ -51,12 +52,18 @@ public class MyAdapter extends ArrayAdapter<Goods> {
         return position;
     }
 
+    public MyAdapter(Context context, int resource, List<Goods> list) {
+        super(context, resource);
+        this.context = context;
+        this.list = list;
+    }
 
-    public MyAdapter(Context context, int resource, List<Goods> list ,TextView tv) {
+    public MyAdapter(Context context, int resource, List<Goods> list, TextView tv, TextView bc_num) {
         super(context, resource);
         this.context = context;
         this.list = list;
         this.totalMoney = tv;
+        this.bc_num = bc_num;
     }
 
     @Override
@@ -88,22 +95,32 @@ public class MyAdapter extends ArrayAdapter<Goods> {
         ImageView goodsReduce = viewHolder.goodsReduce;
         goodsReduce.setOnClickListener(new View.OnClickListener() {
             DatabaseHelper databaseHelper = new DatabaseHelper(context);
+
             @Override
             public void onClick(View v) {
-                if(!(goods.getNum()==0)){
-                    int num = goods.getNum()-1;
+                if (!(goods.getNum() == 0)) {
+                    int num = goods.getNum() - 1;
                     goods.setNum(num);
                     databaseHelper.updateAGoods(goods);
                     //当有数据变化时刷新UI
                     notifyDataSetChanged();
 
+                    //bc_num是购物车内的商品总数,点击一次，数量减一。
+                    int number = Integer.parseInt((String) bc_num.getText());
+                    if (number != 0) {
+                        number--;
+                        bc_num.setText(String.valueOf(number));
+                    } else {
+                        Toast.makeText(context, "购物车内商品为空!", Toast.LENGTH_LONG).show();
+                    }
+
                     //totalMoney是电子商务模块fragment通过adapter适配器传进来的购物车内商品总价（合计的实例对象）。
-                    float total = Float.parseFloat((String)totalMoney.getText());
+                    float total = Float.parseFloat((String) totalMoney.getText());
                     float money = total - Float.parseFloat(goods.getPrice());
                     totalMoney.setText(String.valueOf(money));
-                }else{
+                } else {
                     //如果所选商品为空（数目为零），当点击减号时，弹出一下提示。
-                    Toast.makeText(context,"您所选商品为空！",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "您所选商品为空！", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -113,16 +130,22 @@ public class MyAdapter extends ArrayAdapter<Goods> {
         goodsAdd.setOnClickListener(new View.OnClickListener() {
 
             DatabaseHelper databaseHelper = new DatabaseHelper(context);
+
             @Override
             public void onClick(View v) {
-                int num = goods.getNum()+1;
+                int num = goods.getNum() + 1;
                 goods.setNum(num);
                 databaseHelper.updateAGoods(goods);
                 //当有数据变化时，刷新UI
                 notifyDataSetChanged();
 
+                //bc_num是购物车内的商品总数，点击一次数量加一。
+                int number = Integer.parseInt((String) bc_num.getText());
+                number++;
+                bc_num.setText(String.valueOf(number));
+
                 //totalMoney是电子商务模块fragment通过adapter适配器传进来的购物车内商品总价（合计的实例对象）。
-                float total = Float.parseFloat((String)totalMoney.getText());
+                float total = Float.parseFloat((String) totalMoney.getText());
                 float money = total + Float.parseFloat(goods.getPrice());
                 totalMoney.setText(String.valueOf(money));
             }

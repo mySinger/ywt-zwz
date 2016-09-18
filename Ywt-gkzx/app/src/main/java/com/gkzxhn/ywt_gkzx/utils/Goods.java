@@ -40,6 +40,12 @@ public class Goods {
 
     }
 
+    public Goods(String name, String price, int num) {
+        this.name = name;
+        this.price = price;
+        this.num = num;
+    }
+
     public String getName() {
         return name;
     }
