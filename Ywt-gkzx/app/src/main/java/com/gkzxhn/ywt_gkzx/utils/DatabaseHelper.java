@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * 数据库名
      */
     private static final String DATABASE_NAME = "mySQLite.db";
+    private List<Goods> list;
 
     /**
      * 构造方法
@@ -135,6 +136,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return list;
+    }
+
+    /**
+     *通过此方法从数据库中获取用户加入购物车中的商品信息
+     */
+    public void obtainClickGoodsMessage(List<Goods> BuyCarList){
+        List<Goods> list =  readAllGoods();
+        for(Goods goods: list){
+            if(goods.getNum() != 0){
+                BuyCarList.add(goods);
+            }
+        }
     }
 
     /**

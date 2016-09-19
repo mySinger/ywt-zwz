@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@color/theme"
         android:padding="10dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,51 +21,123 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:background="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:background="#ffffff">
+
         <LinearLayout
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
             <TextView
-                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="商品数量："/>
+                android:text="商品数量："
+                android:textSize="15sp" />
+
             <TextView
-                android:textSize="15sp"
+                android:id="@+id/goods_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"/>
+                android:text="0"
+                android:textSize="15sp" />
+
             <TextView
-                android:textSize="15sp"
-                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="件"/>
+                android:layout_marginLeft="5dp"
+                android:text="件"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/tv_clear"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
             android:drawableLeft="@drawable/clearbuycar"
-            android:text="清理购物车"
-            android:textSize="15sp"
+            android:drawablePadding="5dp"
             android:padding="5dp"
-            android:drawablePadding="5dp"/>
+            android:text="清理购物车"
+            android:textSize="15sp" />
     </RelativeLayout>
 
-    <ListView
+    <FrameLayout
+        android:id="@+id/buyCar_fl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lv_buyCar"></ListView>
+        android:layout_height="0dp"
+        android:layout_weight="8"></FrameLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="left">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="合计："
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="元" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="注意：含配送费2元" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/settlementBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/orange_bg"
+                android:padding="10dp"
+                android:text="结算"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

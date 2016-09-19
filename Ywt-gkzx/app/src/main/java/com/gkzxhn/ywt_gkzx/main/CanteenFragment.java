@@ -110,6 +110,14 @@ public class CanteenFragment extends Fragment implements View.OnClickListener {
                 "走过路过不要错过，各位顾客请慢走！", "6", R.drawable.beizi3, 0));
         myList.add(new Goods("世界杯", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
                 "走过路过不要错过，各位顾客请慢走！", "66", R.drawable.beizi4, 0));
+        myList.add(new Goods("后悔药", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
+                "走过路过不要错过，各位顾客请慢走！", "6", R.drawable.beizi1, 0));
+        myList.add(new Goods("长生不老药", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
+                "走过路过不要错过，各位顾客请慢走！", "66", R.drawable.beizi2, 0));
+        myList.add(new Goods("返老还童药", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
+                "走过路过不要错过，各位顾客请慢走！", "6", R.drawable.beizi3, 0));
+        myList.add(new Goods("忘情水", "门面到期，清仓大耍买，十元买不了吃亏、买不了上当，" +
+                "走过路过不要错过，各位顾客请慢走！", "66", R.drawable.beizi4, 0));
 
         databaseHelper = new DatabaseHelper(getActivity());
         sp = getActivity().getSharedPreferences("APPData",MODE_PRIVATE);

@@ -8,20 +8,21 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
 import com.gkzxhn.ywt_gkzx.main.MainActivity;
 import com.gkzxhn.ywt_gkzx.utils.CustomDialog;
 
 import static android.R.attr.data;
+import static com.gkzxhn.ywt_gkzx.R.drawable.e;
 
 /**
  * Created by ZengWenZhi on 2016/8/31 0031.
  * 远程探监充值的支付模块
- *
  */
 
-public class PayActivity extends Activity implements View.OnClickListener{
+public class PayActivity extends Activity implements View.OnClickListener {
 
     private TextView pay;
     private String payMoney;
@@ -40,7 +41,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
     }
 
-    public void initView(){
+    public void initView() {
         payBack = (ImageView) findViewById(R.id.pay_back);
         payBack.setOnClickListener(this);
         pay = (TextView) findViewById(R.id.pay_money);
@@ -48,26 +49,31 @@ public class PayActivity extends Activity implements View.OnClickListener{
     }
 
     /**
-     *返回键点击事件监听
+     * 返回键点击事件监听
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode){
+        switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                final CustomDialog customDialog = new CustomDialog(this);
-                customDialog.createDialog("Yes", "No", "放弃结算", "如果你确认要取消结算，你所选商品会全部清零，请你慎重选择！", new CustomDialog.CallBack() {
-                    @Override
-                    public void isConfirm(boolean flag) {
-                        if(flag == true){
-                            Intent data = new Intent();
-                            data.putExtra("Intent","PayMoney");
-                            PayActivity.this.setResult(1,data);
-                            finish();
-                        }else{
-                            customDialog.createToasts("请继续结算,祝您购物愉快！",getLayoutInflater());
+                //当从购物车商品详情页跳转到支付页面时，不弹出选择对话框
+                if (getIntent().getExtras().getCharSequence("TAG").equals("购物车详情页")) {
+                    Toast.makeText(PayActivity.this,"欢迎您的再次光临!",Toast.LENGTH_LONG).show();
+                } else {
+                    final CustomDialog customDialog = new CustomDialog(this);
+                    customDialog.createDialog("Yes", "No", "放弃结算", "如果你确认要取消结算，你所选商品会全部清零，请你慎重选择！", new CustomDialog.CallBack() {
+                        @Override
+                        public void isConfirm(boolean flag) {
+                            if (flag == true) {
+                                Intent data = new Intent();
+                                data.putExtra("Intent", "PayMoney");
+                                PayActivity.this.setResult(1, data);
+                                finish();
+                            } else {
+                                customDialog.createToasts("请继续结算,祝您购物愉快！", getLayoutInflater());
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 break;
         }
         return super.onKeyDown(keyCode, event);
@@ -75,19 +81,19 @@ public class PayActivity extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.pay_back:
                 final CustomDialog customDialog = new CustomDialog(this);
                 customDialog.createDialog("Yes", "No", "放弃结算", "如果你确认要取消结算，你所选商品会全部清零，请你慎重选择！", new CustomDialog.CallBack() {
                     @Override
                     public void isConfirm(boolean flag) {
-                        if(flag == true){
+                        if (flag == true) {
                             Intent data = new Intent();
-                            data.putExtra("Intent","PayMoney");
-                            PayActivity.this.setResult(1,data);
+                            data.putExtra("Intent", "PayMoney");
+                            PayActivity.this.setResult(1, data);
                             finish();
-                        }else{
-                            customDialog.createToasts("请继续结算,祝您购物愉快！",getLayoutInflater());
+                        } else {
+                            customDialog.createToasts("请继续结算,祝您购物愉快！", getLayoutInflater());
                         }
                     }
                 });

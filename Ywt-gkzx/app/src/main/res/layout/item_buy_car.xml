@@ -7,13 +7,15 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="世界如此美好杯"
-        android:textSize="15sp"/>
+        android:textSize="18sp"/>
     <LinearLayout
-        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¥"
-            android:textSize="15sp"/>
+            android:textSize="18sp"/>
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
@@ -30,25 +32,32 @@
             android:text="998"
             android:textSize="15sp"/>
         <ImageView
+            android:background="#f1f1f1"
+            android:layout_gravity="center"
             android:id="@+id/img_reduce"
             android:layout_marginLeft="5dp"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/shoppiing_reduce"/>
         <TextView
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:id="@+id/tv_num"
             android:background="#f1f1f1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:layout_marginLeft="5dp"
             />
         <ImageView
+            android:layout_marginRight="10dp"
+            android:background="#f1f1f1"
+            android:layout_gravity="center"
             android:id="@+id/img_add"
             android:layout_marginLeft="5dp"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/shopping_add"
             />
 

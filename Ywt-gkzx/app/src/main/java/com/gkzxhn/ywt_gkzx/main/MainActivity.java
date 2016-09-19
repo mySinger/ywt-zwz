@@ -26,7 +26,6 @@ import com.gkzxhn.ywt_gkzx.main_activity.AccountInformationActivity;
 import com.gkzxhn.ywt_gkzx.main_activity.RemittanceRecordActivity;
 import com.gkzxhn.ywt_gkzx.main_activity.SettingActivity;
 import com.gkzxhn.ywt_gkzx.main_activity.ShoppingRecordActivity;
-import com.gkzxhn.ywt_gkzx.utils.BaseActivity;
 import com.gkzxhn.ywt_gkzx.utils.CustomDialog;
 import com.gkzxhn.ywt_gkzx.utils.DatabaseHelper;
 import com.gkzxhn.ywt_gkzx.utils.Goods;
@@ -34,7 +33,6 @@ import com.gkzxhn.ywt_gkzx.utils.MyAdapter;
 
 import java.util.List;
 
-import static android.R.attr.tag;
 import static com.gkzxhn.ywt_gkzx.R.drawable.menu_setting;
 import static com.gkzxhn.ywt_gkzx.R.drawable.remittance_record;
 import static com.gkzxhn.ywt_gkzx.R.drawable.shopping_record;
@@ -42,11 +40,9 @@ import static com.gkzxhn.ywt_gkzx.R.drawable.tab_first_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.tab_secend_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.tab_thrid_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.user_info;
-import static com.gkzxhn.ywt_gkzx.R.id.buyCar_num;
 import static com.gkzxhn.ywt_gkzx.R.id.main;
 import static com.gkzxhn.ywt_gkzx.R.id.rb_first;
-import static com.gkzxhn.ywt_gkzx.R.id.settlement;
-import static com.gkzxhn.ywt_gkzx.R.id.tv_agreement;
+import static com.gkzxhn.ywt_gkzx.R.layout.toast;
 
 /**
  * Created by ZengWenZhi on 2016/8/16 0016.
@@ -132,16 +128,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
         switch (v.getId()) {
             //如果跳转的下一个活动，如果有 intent.getExtras()接受上一个活动的数据，那么上一个活动必须有intent.putExtra()方法。
             case R.id.settlement:
-                Intent intent = new Intent(this, PayActivity.class);
                 TextView totalMoney = (TextView) findViewById(R.id.total_money);
-                intent.putExtra("money", totalMoney.getText() + "元");
-                //在跳转到结算界面的同时，将所选商品清零
-                DatabaseHelper databaseHelper = new DatabaseHelper(this);
-                List<Goods> list = databaseHelper.readAllGoods();
-                databaseHelper.clearNum(list);
 
-                //要求activity有返回值
-                startActivityForResult(intent, 0);
+                //当购物车为空时，弹出提示框，且不跳转到结算页面
+                if (totalMoney.getText().equals("0.00")) {
+                    Toast.makeText(MainActivity.this, "购物车为空！", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(this, PayActivity.class);
+                    intent.putExtra("money", totalMoney.getText() + "元");
+                    //在跳转到结算界面的同时，将所选商品清零
+                    DatabaseHelper databaseHelper = new DatabaseHelper(this);
+                    List<Goods> list = databaseHelper.readAllGoods();
+                    databaseHelper.clearNum(list);
+
+                    //要求activity有返回值
+                    startActivityForResult(intent, 0);
+                }
+
                 break;
             case R.id.btn_back:
                 slideMenu.switchMenu();
@@ -185,8 +188,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
                 });
                 break;
             case R.id.buycar:
+
+                TextView money = (TextView) findViewById(R.id.total_money);
+                TextView num = (TextView) findViewById(R.id.buyCar_num);
                 //跳转至购物车内容详情页面
                 Intent intent_buyCar = new Intent(MainActivity.this, BuyCarActivity.class);
+                //将所选商品总数传递给购物车详情页面
+                intent_buyCar.putExtra("totalnumber", num.getText());
+                //将所选商品总价传递给购物车详情页面
+                intent_buyCar.putExtra("totalmoney", money.getText());
+
+                DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+
                 startActivity(intent_buyCar);
 
                 break;
