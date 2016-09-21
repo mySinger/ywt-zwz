@@ -33,6 +33,7 @@ import com.gkzxhn.ywt_gkzx.utils.MyAdapter;
 
 import java.util.List;
 
+import static com.gkzxhn.ywt_gkzx.R.drawable.e;
 import static com.gkzxhn.ywt_gkzx.R.drawable.menu_setting;
 import static com.gkzxhn.ywt_gkzx.R.drawable.remittance_record;
 import static com.gkzxhn.ywt_gkzx.R.drawable.shopping_record;
@@ -40,7 +41,9 @@ import static com.gkzxhn.ywt_gkzx.R.drawable.tab_first_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.tab_secend_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.tab_thrid_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.user_info;
+import static com.gkzxhn.ywt_gkzx.R.id.buyCar_num;
 import static com.gkzxhn.ywt_gkzx.R.id.main;
+import static com.gkzxhn.ywt_gkzx.R.id.money;
 import static com.gkzxhn.ywt_gkzx.R.id.rb_first;
 import static com.gkzxhn.ywt_gkzx.R.layout.toast;
 
@@ -70,7 +73,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
     private String TAG;
     private TextView settlement;
     private ImageView buyCar;
+    private TextView buyCar_money;
     private TextView buyCar_num;
+    private DatabaseHelper databaseHelper;
+    private ListView canteenLv;
+    private MyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +143,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
                 } else {
                     Intent intent = new Intent(this, PayActivity.class);
                     intent.putExtra("money", totalMoney.getText() + "元");
+                    intent.putExtra("TAG", "电子商城");
                     //在跳转到结算界面的同时，将所选商品清零
                     DatabaseHelper databaseHelper = new DatabaseHelper(this);
                     List<Goods> list = databaseHelper.readAllGoods();
@@ -188,19 +196,19 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
                 });
                 break;
             case R.id.buycar:
-
-                TextView money = (TextView) findViewById(R.id.total_money);
-                TextView num = (TextView) findViewById(R.id.buyCar_num);
-                //跳转至购物车内容详情页面
-                Intent intent_buyCar = new Intent(MainActivity.this, BuyCarActivity.class);
-                //将所选商品总数传递给购物车详情页面
-                intent_buyCar.putExtra("totalnumber", num.getText());
-                //将所选商品总价传递给购物车详情页面
-                intent_buyCar.putExtra("totalmoney", money.getText());
-
-                DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
-
-                startActivity(intent_buyCar);
+                //购物车为空则弹出相应提示。
+                if (buyCar_num.getText().equals("0")) {
+                    Toast.makeText(MainActivity.this,"购物车为空！",Toast.LENGTH_SHORT).show();
+                } else {
+                    //跳转至购物车内容详情页面
+                    Intent intent_buyCar = new Intent(MainActivity.this, BuyCarActivity.class);
+                    //将所选商品总数传递给购物车详情页面
+                    intent_buyCar.putExtra("totalnumber", buyCar_num.getText());
+                    //将所选商品总价传递给购物车详情页面
+                    intent_buyCar.putExtra("totalmoney", buyCar_money.getText());
+                    //将请求码设为0
+                    startActivityForResult(intent_buyCar, 0);
+                }
 
                 break;
         }
@@ -216,19 +224,30 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case 1:
-                TextView buyCar_num = (TextView) findViewById(R.id.buyCar_num);
                 buyCar_num.setText("0");
-                TextView totalMoney = (TextView) findViewById(R.id.total_money);
-                totalMoney.setText("0.00");
+                buyCar_money.setText("0.00");
 
-                DatabaseHelper databaseHelper = new DatabaseHelper(this);
-                ListView canteenLv = (ListView) findViewById(R.id.canteen_fragment_lv);
-                MyAdapter myAdapter = new MyAdapter(this, R.layout.item_shopping_content,
-                        databaseHelper.readAllGoods(), totalMoney, buyCar_num);
+                databaseHelper = new DatabaseHelper(this);
+                canteenLv = (ListView) findViewById(R.id.canteen_fragment_lv);
+                myAdapter = new MyAdapter(this, R.layout.item_shopping_content,
+                        databaseHelper.readAllGoods(), buyCar_money, buyCar_num);
                 canteenLv.setAdapter(myAdapter);
 
                 break;
+            case 0:
+                Bundle dataBuyCar = data.getExtras();
+                String money = (String) dataBuyCar.get("money");
+                String number = dataBuyCar.getString("number");
 
+                buyCar_num.setText(number);
+                buyCar_money.setText(money);
+                //从购物车详情页重新返回电子商城界面后，重新加载商品信息，与购物车详情页同步更新
+                databaseHelper = new DatabaseHelper(this);
+                canteenLv = (ListView) findViewById(R.id.canteen_fragment_lv);
+                myAdapter = new MyAdapter(this, R.layout.item_shopping_content,
+                        databaseHelper.readAllGoods(), buyCar_money, buyCar_num);
+                canteenLv.setAdapter(myAdapter);
+                break;
         }
     }
 
@@ -318,6 +337,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
     public void initView() {
         //拿到购物车内商品总数对象
         buyCar_num = (TextView) findViewById(R.id.buyCar_num);
+        //拿到购物车内商品合计对象
+        buyCar_money = (TextView) findViewById(R.id.total_money);
 
         //拿到购物车对象,并设置点击监听
         buyCar = (ImageView) findViewById(R.id.buycar);

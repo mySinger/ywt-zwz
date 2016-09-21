@@ -11,10 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
-import com.gkzxhn.ywt_gkzx.main.MainActivity;
 import com.gkzxhn.ywt_gkzx.utils.CustomDialog;
 
-import static android.R.attr.data;
 import static com.gkzxhn.ywt_gkzx.R.drawable.e;
 
 /**
@@ -57,7 +55,7 @@ public class PayActivity extends Activity implements View.OnClickListener {
             case KeyEvent.KEYCODE_BACK:
                 //当从购物车商品详情页跳转到支付页面时，不弹出选择对话框
                 if (getIntent().getExtras().getCharSequence("TAG").equals("购物车详情页")) {
-                    Toast.makeText(PayActivity.this,"欢迎您的再次光临!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(PayActivity.this, "欢迎您的再次光临!", Toast.LENGTH_SHORT).show();
                 } else {
                     final CustomDialog customDialog = new CustomDialog(this);
                     customDialog.createDialog("Yes", "No", "放弃结算", "如果你确认要取消结算，你所选商品会全部清零，请你慎重选择！", new CustomDialog.CallBack() {
@@ -83,20 +81,25 @@ public class PayActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_back:
-                final CustomDialog customDialog = new CustomDialog(this);
-                customDialog.createDialog("Yes", "No", "放弃结算", "如果你确认要取消结算，你所选商品会全部清零，请你慎重选择！", new CustomDialog.CallBack() {
-                    @Override
-                    public void isConfirm(boolean flag) {
-                        if (flag == true) {
-                            Intent data = new Intent();
-                            data.putExtra("Intent", "PayMoney");
-                            PayActivity.this.setResult(1, data);
-                            finish();
-                        } else {
-                            customDialog.createToasts("请继续结算,祝您购物愉快！", getLayoutInflater());
+                if (getIntent().getExtras().getCharSequence("TAG").equals("电子商城")) {
+                    final CustomDialog customDialog = new CustomDialog(this);
+                    customDialog.createDialog("Yes", "No", "放弃结算", "如果你确认要取消结算，你所选商品会全部清零，请你慎重选择！", new CustomDialog.CallBack() {
+                        @Override
+                        public void isConfirm(boolean flag) {
+                            if (flag == true) {
+                                Intent data = new Intent();
+                                data.putExtra("Intent", "PayMoney");
+                                PayActivity.this.setResult(1, data);
+                                finish();
+                            } else {
+                                customDialog.createToasts("请继续结算,祝您购物愉快！", getLayoutInflater());
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    Toast.makeText(PayActivity.this, "欢迎您的再次光临!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
                 break;
         }
     }

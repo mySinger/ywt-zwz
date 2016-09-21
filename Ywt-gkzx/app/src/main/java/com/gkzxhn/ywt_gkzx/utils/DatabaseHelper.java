@@ -5,9 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.gkzxhn.ywt_gkzx.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +85,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(
                 "UPDATE goods SET num=? WHERE id=?",
                 new Object[]{goods.getNum(), goods.getId()});
+    }
+
+    /**
+     * 将数据库中的商品数量清零
+     */
+    public void clearNumber(Goods goods){
+        SQLiteDatabase database = getWritableDatabase();
+        //根据id更新一条数据
+        database.execSQL(
+                "UPDATE goods SET num=? WHERE id=?",
+                new Object[]{0, goods.getId()});
     }
 
     /**

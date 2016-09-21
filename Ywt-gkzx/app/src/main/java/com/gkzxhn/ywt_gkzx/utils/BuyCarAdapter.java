@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
 
@@ -21,7 +23,7 @@ import static com.gkzxhn.ywt_gkzx.R.drawable.e;
  * 购物车界面listView的适配器
  */
 
-public class BuyCarAdapter extends ArrayAdapter<Goods>{
+public class BuyCarAdapter extends ArrayAdapter<Goods> {
     private List<Goods> goodsList;
     private Context context;
     private ViewHolder viewHolder;
@@ -34,20 +36,39 @@ public class BuyCarAdapter extends ArrayAdapter<Goods>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
+        if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_buy_car,null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_buy_car, null);
             viewHolder.name = (TextView) convertView.findViewById(R.id.tv_name);
             viewHolder.price = (TextView) convertView.findViewById(R.id.tv_price);
             viewHolder.num = (TextView) convertView.findViewById(R.id.tv_num);
+            viewHolder.add = (ImageView) convertView.findViewById(R.id.img_add);
+            viewHolder.reduce = (ImageView) convertView.findViewById(R.id.img_reduce);
 
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(goodsList.get(position).getName());
         viewHolder.price.setText(goodsList.get(position).getPrice());
         viewHolder.num.setText(String.valueOf(goodsList.get(position).getNum()));
+
+        //购物车详情页面的listview的加号点击事件监听
+        viewHolder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "加", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //购物车详情页面的listview的减号点击事件监听
+        viewHolder.reduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "减", Toast.LENGTH_LONG).show();
+
+            }
+        });
 
         return convertView;
     }
@@ -67,9 +88,12 @@ public class BuyCarAdapter extends ArrayAdapter<Goods>{
         return goodsList.size();
     }
 
-    class ViewHolder{
+
+    class ViewHolder {
         private TextView name;
         private TextView price;
         private TextView num;
+        private ImageView reduce;
+        private ImageView add;
     }
 }
