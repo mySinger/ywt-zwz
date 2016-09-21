@@ -13,8 +13,6 @@ import android.widget.Toast;
 import com.gkzxhn.ywt_gkzx.R;
 import com.gkzxhn.ywt_gkzx.utils.CustomDialog;
 
-import static com.gkzxhn.ywt_gkzx.R.drawable.e;
-
 /**
  * Created by ZengWenZhi on 2016/8/31 0031.
  * 远程探监充值的支付模块

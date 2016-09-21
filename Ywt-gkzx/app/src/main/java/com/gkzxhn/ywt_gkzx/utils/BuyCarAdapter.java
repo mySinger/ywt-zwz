@@ -4,19 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
 
 import java.util.List;
-import java.util.jar.Attributes;
-
-import static android.R.attr.name;
-import static com.gkzxhn.ywt_gkzx.R.drawable.e;
 
 /**
  * Created by ZengWenZhi on 2016/9/18 0018.
@@ -27,15 +21,19 @@ public class BuyCarAdapter extends ArrayAdapter<Goods> {
     private List<Goods> goodsList;
     private Context context;
     private ViewHolder viewHolder;
+    private TextView number;
+    private TextView money;
 
-    public BuyCarAdapter(Context context, int resource, List<Goods> goodsList) {
+    public BuyCarAdapter(Context context, int resource, List<Goods> goodsList, TextView number, TextView money) {
         super(context, resource);
         this.goodsList = goodsList;
         this.context = context;
+        this.money = money;
+        this.number = number;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_buy_car, null);
@@ -53,11 +51,25 @@ public class BuyCarAdapter extends ArrayAdapter<Goods> {
         viewHolder.price.setText(goodsList.get(position).getPrice());
         viewHolder.num.setText(String.valueOf(goodsList.get(position).getNum()));
 
+        final DatabaseHelper databaseHelper = new DatabaseHelper(context);
         //购物车详情页面的listview的加号点击事件监听
         viewHolder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "加", Toast.LENGTH_LONG).show();
+                Goods goods = goodsList.get(position);
+                goods.setNum(goods.getNum() + 1);
+
+                //拿到购物车商品数量对象
+                int num = Integer.parseInt((String) number.getText());
+                num++;
+                number.setText(String.valueOf(num));
+                //拿到购物车商品合计对象
+                float price = Float.parseFloat((String) money.getText());
+                price += Float.parseFloat(goods.price);
+                money.setText(String.valueOf(price));
+
+                databaseHelper.updateAGoods(goods);
+                notifyDataSetChanged();
             }
         });
 
@@ -65,8 +77,34 @@ public class BuyCarAdapter extends ArrayAdapter<Goods> {
         viewHolder.reduce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "减", Toast.LENGTH_LONG).show();
+                Goods goods = goodsList.get(position);
+                goods.setNum(goods.getNum() - 1);
 
+                //拿到购物车商品数量对象
+                int num = Integer.parseInt((String) number.getText());
+                num--;
+
+                if (goods.getNum() == 0) {
+                    //当购物车详情页的商品数量减为零时将该商品从购物车中删除
+                    goodsList.remove(goods);
+                    number.setText(String.valueOf(num));
+                    //拿到购物车商品合计对象
+                    float price = Float.parseFloat((String) money.getText());
+                    price -= Float.parseFloat(goods.price);
+                    money.setText(String.valueOf(price));
+
+                    databaseHelper.updateAGoods(goods);
+                } else {
+                    number.setText(String.valueOf(num));
+                    //拿到购物车商品合计对象
+                    float price = Float.parseFloat((String) money.getText());
+                    price -= Float.parseFloat(goods.price);
+                    money.setText(String.valueOf(price));
+
+                    databaseHelper.updateAGoods(goods);
+                }
+
+                notifyDataSetChanged();
             }
         });
 

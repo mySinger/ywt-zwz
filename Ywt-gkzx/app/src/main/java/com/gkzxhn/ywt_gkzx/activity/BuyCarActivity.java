@@ -16,9 +16,6 @@ import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
 import com.gkzxhn.ywt_gkzx.fragment.BuyCarFragment;
-import com.gkzxhn.ywt_gkzx.utils.Goods;
-
-import java.util.List;
 
 import static com.gkzxhn.ywt_gkzx.R.drawable.clearbuycar;
 

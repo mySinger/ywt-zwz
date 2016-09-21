@@ -28,21 +28,18 @@ public class BuyCarFragment extends Fragment implements View.OnClickListener {
     private DatabaseHelper databaseHelper;
     private TextView number;
     private TextView money;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_buy_car, container, false);
+        view = inflater.inflate(R.layout.fragment_buy_car, container, false);
 
 
         list = new ArrayList<>();
         databaseHelper = new DatabaseHelper(getActivity());
         //从数据库中获取所选商品信息，将其呈现在购物车详情页
         databaseHelper.obtainClickGoodsMessage(list);
-
-        buyCarAdapter = new BuyCarAdapter(getActivity(), R.layout.item_buy_car, list);
-        ListView buyCarLV = (ListView) view.findViewById(R.id.lv_buyCar);
-        buyCarLV.setAdapter(buyCarAdapter);
 
         initView();
         return view;
@@ -56,6 +53,10 @@ public class BuyCarFragment extends Fragment implements View.OnClickListener {
 
         number = (TextView) getActivity().findViewById(R.id.goods_number);
         money = (TextView) getActivity().findViewById(R.id.money);
+
+        buyCarAdapter = new BuyCarAdapter(getActivity(), R.layout.item_buy_car, list, number, money);
+        ListView buyCarLV = (ListView) view.findViewById(R.id.lv_buyCar);
+        buyCarLV.setAdapter(buyCarAdapter);
     }
 
 
@@ -66,7 +67,7 @@ public class BuyCarFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_clear:
                 number.setText("0");
                 money.setText("0.00");
-                for(Goods goods: list){
+                for (Goods goods : list) {
                     databaseHelper.clearNumber(goods);
                 }
                 list.clear();
