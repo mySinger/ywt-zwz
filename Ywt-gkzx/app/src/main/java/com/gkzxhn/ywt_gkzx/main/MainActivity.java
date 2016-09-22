@@ -198,7 +198,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
             case R.id.buycar:
                 //购物车为空则弹出相应提示。
                 if (buyCar_num.getText().equals("0")) {
-                    Toast.makeText(MainActivity.this,"购物车为空！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "购物车为空！", Toast.LENGTH_SHORT).show();
                 } else {
                     //跳转至购物车内容详情页面
                     Intent intent_buyCar = new Intent(MainActivity.this, BuyCarActivity.class);
@@ -225,6 +225,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
         switch (resultCode) {
             case 1:
                 buyCar_num.setText("0");
+                buyCar_num.setVisibility(View.GONE);
                 buyCar_money.setText("0.00");
 
                 databaseHelper = new DatabaseHelper(this);
@@ -240,6 +241,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
                 String number = dataBuyCar.getString("number");
 
                 buyCar_num.setText(number);
+                if (number.equals("0")) {
+                    buyCar_num.setVisibility(View.GONE);
+                }
                 buyCar_money.setText(money);
                 //从购物车详情页重新返回电子商城界面后，重新加载商品信息，与购物车详情页同步更新
                 databaseHelper = new DatabaseHelper(this);

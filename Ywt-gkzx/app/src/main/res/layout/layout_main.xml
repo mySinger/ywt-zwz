@@ -67,6 +67,7 @@
                     android:src="@drawable/buycar" />
 
                 <TextView
+                    android:visibility="gone"
                     android:gravity="center"
                     android:id="@+id/buyCar_num"
                     android:textColor="#ffffff"

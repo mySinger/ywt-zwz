@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
 import com.gkzxhn.ywt_gkzx.utils.BuyCarAdapter;
@@ -29,6 +31,7 @@ public class BuyCarFragment extends Fragment implements View.OnClickListener {
     private TextView number;
     private TextView money;
     private View view;
+    private TextView clearBuyCar;
 
     @Nullable
     @Override
@@ -48,17 +51,16 @@ public class BuyCarFragment extends Fragment implements View.OnClickListener {
     //初始化View
     public void initView() {
         //拿到碎片所在activity中的清空购物车控件对象
-        TextView clearBuyCar = (TextView) getActivity().findViewById(R.id.tv_clear);
+        clearBuyCar = (TextView) getActivity().findViewById(R.id.tv_clear);
         clearBuyCar.setOnClickListener(this);
 
         number = (TextView) getActivity().findViewById(R.id.goods_number);
         money = (TextView) getActivity().findViewById(R.id.money);
 
-        buyCarAdapter = new BuyCarAdapter(getActivity(), R.layout.item_buy_car, list, number, money);
+        buyCarAdapter = new BuyCarAdapter(getActivity(), R.layout.item_buy_car, list, number, money,clearBuyCar);
         ListView buyCarLV = (ListView) view.findViewById(R.id.lv_buyCar);
         buyCarLV.setAdapter(buyCarAdapter);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -71,6 +73,7 @@ public class BuyCarFragment extends Fragment implements View.OnClickListener {
                     databaseHelper.clearNumber(goods);
                 }
                 list.clear();
+                //更新视图内容
                 buyCarAdapter.notifyDataSetChanged();
                 break;
         }

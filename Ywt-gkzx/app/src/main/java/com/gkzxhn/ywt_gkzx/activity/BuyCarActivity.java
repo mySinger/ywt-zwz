@@ -49,6 +49,7 @@ public class BuyCarActivity extends Activity implements View.OnClickListener {
         Drawable drawableClear = getResources().getDrawable(clearbuycar);
         drawableClear.setBounds(0, 0, 50, 50);
         tvClear.setCompoundDrawables(drawableClear, null, null, null);
+
         //拿到购物车详情页的结算按钮对象
         settlementBtn = (Button) findViewById(R.id.settlementBtn);
         settlementBtn.setOnClickListener(this);
@@ -83,7 +84,7 @@ public class BuyCarActivity extends Activity implements View.OnClickListener {
                 String tMoney = (String) money.getText();
 
                 //在这里做判断，如果商品合计为零，则不会跳转到结算页面。
-                if (tMoney.equals("0.00")) {
+                if (tMoney.equals("0.00")||tMoney.equals("0.0")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(BuyCarActivity.this);
                     builder.setTitle("温馨提示！")
                             .setMessage("购物车为空，请前往网上商城选购您所需的商品。")

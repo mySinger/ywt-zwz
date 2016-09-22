@@ -31,7 +31,9 @@ import static java.lang.Integer.parseInt;
 public class MyAdapter extends ArrayAdapter<Goods> {
     public Context context;
     private ViewHolder viewHolder;
+    //购物车商品合计
     public TextView totalMoney;
+    //购物车商品数量
     private TextView bc_num;
 
     public List<Goods> list;
@@ -102,22 +104,27 @@ public class MyAdapter extends ArrayAdapter<Goods> {
                     int num = goods.getNum() - 1;
                     goods.setNum(num);
                     databaseHelper.updateAGoods(goods);
-                    //当有数据变化时刷新UI
-                    notifyDataSetChanged();
 
                     //bc_num是购物车内的商品总数,点击一次，数量减一。
                     int number = Integer.parseInt((String) bc_num.getText());
-                    if (number != 0) {
+                    if (number >= 2) {
                         number--;
                         bc_num.setText(String.valueOf(number));
-                    } else {
-                        Toast.makeText(context, "购物车内商品为空!", Toast.LENGTH_LONG).show();
+                    } else if(number == 1){
+                        number--;
+                        bc_num.setText(String.valueOf(number));
+                        //当购物车内所选商品数为零时，隐藏商品数量显示
+                        bc_num.setVisibility(View.GONE);
                     }
 
                     //totalMoney是电子商务模块fragment通过adapter适配器传进来的购物车内商品总价（合计的实例对象）。
                     float total = Float.parseFloat((String) totalMoney.getText());
                     float money = total - Float.parseFloat(goods.getPrice());
                     totalMoney.setText(String.valueOf(money));
+
+
+                    //当有数据变化时刷新UI
+                    notifyDataSetChanged();
                 } else {
                     //如果所选商品为空（数目为零），当点击减号时，弹出一下提示。
                     Toast.makeText(context, "您所选商品为空！", Toast.LENGTH_LONG).show();
@@ -143,6 +150,8 @@ public class MyAdapter extends ArrayAdapter<Goods> {
                 int number = Integer.parseInt((String) bc_num.getText());
                 number++;
                 bc_num.setText(String.valueOf(number));
+                //购物车商品数量不为零，显示商品数量。
+                bc_num.setVisibility(View.VISIBLE);
 
                 //totalMoney是电子商务模块fragment通过adapter适配器传进来的购物车内商品总价（合计的实例对象）。
                 float total = Float.parseFloat((String) totalMoney.getText());

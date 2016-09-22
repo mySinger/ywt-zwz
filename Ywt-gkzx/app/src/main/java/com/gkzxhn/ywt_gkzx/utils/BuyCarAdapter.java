@@ -1,16 +1,22 @@
 package com.gkzxhn.ywt_gkzx.utils;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
+import com.gkzxhn.ywt_gkzx.activity.BuyCarActivity;
+import com.gkzxhn.ywt_gkzx.main.MainActivity;
 
 import java.util.List;
+
+import static com.gkzxhn.ywt_gkzx.R.drawable.c;
 
 /**
  * Created by ZengWenZhi on 2016/9/18 0018.
@@ -23,13 +29,16 @@ public class BuyCarAdapter extends ArrayAdapter<Goods> {
     private ViewHolder viewHolder;
     private TextView number;
     private TextView money;
+    //购物车内的清空购物车对象
+    private TextView clear;
 
-    public BuyCarAdapter(Context context, int resource, List<Goods> goodsList, TextView number, TextView money) {
+    public BuyCarAdapter(Context context, int resource, List<Goods> goodsList, TextView number, TextView money, TextView clear) {
         super(context, resource);
         this.goodsList = goodsList;
         this.context = context;
         this.money = money;
         this.number = number;
+        this.clear = clear;
     }
 
     @Override
@@ -88,6 +97,18 @@ public class BuyCarAdapter extends ArrayAdapter<Goods> {
                     //当购物车详情页的商品数量减为零时将该商品从购物车中删除
                     goodsList.remove(goods);
                     number.setText(String.valueOf(num));
+
+                    /**
+                     * num为购物车内商品数
+                     * 当购物车内商品数为零时，隐藏清空按钮
+                     * clear.setVisibility(View.GONE);
+                     * 当购物车内商品数为空时，将清空按钮设为不可点击
+                     * clear.setClickable(false);
+                     */
+                    if (num == 0) {
+                        clear.setClickable(false);
+                    }
+
                     //拿到购物车商品合计对象
                     float price = Float.parseFloat((String) money.getText());
                     price -= Float.parseFloat(goods.price);
