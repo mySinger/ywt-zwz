@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
 import com.gkzxhn.ywt_gkzx.main.MainActivity;
 import com.gkzxhn.ywt_gkzx.regist.RegisterActivity;
 import com.gkzxhn.ywt_gkzx.utils.BaseFragment;
+import com.gkzxhn.ywt_gkzx.utils.CountDownTimerUtils;
 import com.gkzxhn.ywt_gkzx.utils.JudgeClass;
 
 /**
@@ -31,6 +33,7 @@ public class LoginFragmentPerson extends BaseFragment implements View.OnClickLis
     private EditText verificationCode;
     private JudgeClass jc;
     private Button noAccountLogin;
+    private TextView et_security;
 
     //初始化View
     @Override
@@ -50,9 +53,12 @@ public class LoginFragmentPerson extends BaseFragment implements View.OnClickLis
         phoneNumber = (EditText) view.findViewById(R.id.et_phone_number);
         //身份证号码
         idCard = (EditText) view.findViewById(R.id.et_id_card);
-        //验证码
+        //验证码输入框对象
         verificationCode = (EditText) view.findViewById(R.id.et_verification_code);
         verificationCode.setBackgroundColor(getResources().getColor(R.color.white));
+        //验证码获取对象
+        et_security = (TextView) view.findViewById(R.id.et_security);
+        et_security.setOnClickListener(this);
     }
 
     //初始化数据
@@ -105,7 +111,7 @@ public class LoginFragmentPerson extends BaseFragment implements View.OnClickLis
 
                 } else {
                     Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra("Tag","欢迎使用!");
+                    intent.putExtra("Tag", "欢迎使用!");
                     startActivity(intent);
                 }
                 break;
@@ -115,11 +121,15 @@ public class LoginFragmentPerson extends BaseFragment implements View.OnClickLis
                 break;
             case R.id.no_account_login:
                 //无账号快捷登录主界面
-                Intent intent = new Intent(context,MainActivity.class);
+                Intent intent = new Intent(context, MainActivity.class);
                 //无账号快捷登录时给主界面发送标签“NoAccountLogin”
                 intent.putExtra("Tag", "无账号快捷登录");
                 startActivity(intent);
-
+                break;
+            case R.id.et_security:
+                CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(et_security, 60000, 1000);
+                mCountDownTimerUtils.start();
+                break;
         }
     }
 }
