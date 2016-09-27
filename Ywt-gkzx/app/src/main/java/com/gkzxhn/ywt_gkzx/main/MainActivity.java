@@ -33,7 +33,6 @@ import com.gkzxhn.ywt_gkzx.utils.MyAdapter;
 
 import java.util.List;
 
-import static com.gkzxhn.ywt_gkzx.R.drawable.e;
 import static com.gkzxhn.ywt_gkzx.R.drawable.menu_setting;
 import static com.gkzxhn.ywt_gkzx.R.drawable.remittance_record;
 import static com.gkzxhn.ywt_gkzx.R.drawable.shopping_record;
@@ -41,11 +40,8 @@ import static com.gkzxhn.ywt_gkzx.R.drawable.tab_first_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.tab_secend_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.tab_thrid_bankground;
 import static com.gkzxhn.ywt_gkzx.R.drawable.user_info;
-import static com.gkzxhn.ywt_gkzx.R.id.buyCar_num;
 import static com.gkzxhn.ywt_gkzx.R.id.main;
-import static com.gkzxhn.ywt_gkzx.R.id.money;
 import static com.gkzxhn.ywt_gkzx.R.id.rb_first;
-import static com.gkzxhn.ywt_gkzx.R.layout.toast;
 
 /**
  * Created by ZengWenZhi on 2016/8/16 0016.
@@ -148,12 +144,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
                     DatabaseHelper databaseHelper = new DatabaseHelper(this);
                     List<Goods> list = databaseHelper.readAllGoods();
                     databaseHelper.clearNum(list);
-
                     //要求activity有返回值
                     startActivityForResult(intent, 0);
                 }
-
                 break;
+            //侧滑菜单唤出、隐藏键
             case R.id.btn_back:
                 slideMenu.switchMenu();
                 break;
@@ -266,7 +261,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Comp
             if (checkedWidgetId == rb_first) {
                 headPager = (TextView) findViewById(R.id.headpager);
                 headPager.setText("首页");
-                Log.e("666666666666666", "首页");
                 settlementLayout.setVisibility(View.GONE);
 
             } else if (checkedWidgetId == R.id.rb_second) {

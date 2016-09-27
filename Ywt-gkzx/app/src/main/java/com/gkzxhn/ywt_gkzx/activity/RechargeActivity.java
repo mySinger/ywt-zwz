@@ -79,19 +79,23 @@ public class RechargeActivity extends Activity implements View.OnClickListener,C
         switch (id){
             case R.id.money_one:
                 Toast.makeText(this,"5",Toast.LENGTH_SHORT).show();
-               intent.putExtra("money","5元");
+                intent.putExtra("money","5元");
+                intent.putExtra("TAG","充值页");
                 break;
             case R.id.money_two:
                 Toast.makeText(this,"20",Toast.LENGTH_SHORT).show();
                 intent.putExtra("money","20元");
+                intent.putExtra("TAG","充值页");
                 break;
             case R.id.money_three:
                 Toast.makeText(this,"50",Toast.LENGTH_SHORT).show();
                 intent.putExtra("money","50元");
+                intent.putExtra("TAG","充值页");
                 break;
             case R.id.money_four:
                 Toast.makeText(this,"100",Toast.LENGTH_SHORT).show();
                 intent.putExtra("money","100元");
+                intent.putExtra("TAG","充值页");
                 break;
             }
         }

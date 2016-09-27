@@ -1,12 +1,11 @@
 package com.gkzxhn.ywt_gkzx.main_activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gkzxhn.ywt_gkzx.R;
-import com.gkzxhn.ywt_gkzx.main.MainActivity;
 import com.gkzxhn.ywt_gkzx.utils.BaseActivity;
 
 import me.foji.widget.PwdEditText;
@@ -19,6 +18,7 @@ import me.foji.widget.PwdEditText;
 public class PassWordSettingActivity extends BaseActivity{
 
     private PwdEditText pwdEditText;
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +30,21 @@ public class PassWordSettingActivity extends BaseActivity{
     }
 
     public void initView(){
+        tv = (TextView) findViewById(R.id.tv);
+
+        //拿到密码输入框对象
         pwdEditText = (PwdEditText) findViewById(R.id.tv_pwd);
         pwdEditText.setOnInputListener(new PwdEditText.OnInputListener() {
             @Override
             public void onInput(CharSequence text) {
-                Log.e("0000000000000000",text+"");
                 Toast.makeText(PassWordSettingActivity.this,text,Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onInputFinish(CharSequence text) {
-                Toast.makeText(PassWordSettingActivity.this,text,Toast.LENGTH_SHORT).show();
+
+                tv.setText("请再次输入密码");
+                Toast.makeText(PassWordSettingActivity.this,"输入完毕！",Toast.LENGTH_SHORT).show();
             }
         });
     }

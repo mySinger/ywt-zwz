@@ -17,6 +17,7 @@ public class SlideMenu extends FrameLayout {
     private View menuView, mainView;
     private int menuWidth = 0;
     private Scroller scroller;
+    public Boolean OPPEN = false;
 
     public SlideMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -56,7 +57,15 @@ public class SlideMenu extends FrameLayout {
                 downX = (int) ev.getX();
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (downX < 50) {
+                if (OPPEN == false && downX < 50) {
+                    return true;
+                } else if (OPPEN == true) {
+                    //moveX为0，将点击事件传递给子View，当moveX不为0时，截获点击事件，自己处理
+                    int moveX = (int) ev.getX() - downX;
+                    Log.i("9999moveX9999", moveX + "");
+                    if (moveX == 0) {
+                        return false;
+                    }
                     return true;
                 }
                 break;
@@ -80,34 +89,24 @@ public class SlideMenu extends FrameLayout {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
                 downX = (int) event.getX();
                 break;
             case MotionEvent.ACTION_MOVE:
-
-
                 int moveX = (int) event.getX();
-                Log.d("moveX", moveX + "");
-                Log.d("downX", downX + "");
-
                 int deltaX = (moveX - downX);
-                Log.d("deltaX", deltaX + "");
 /**
  * newScrollX() 是指当前view的左上角将要相对于母视图的左上角的X轴滑动的偏移量，scrollTo()实现具体滑动。
  * getScrollX() 就是当前view的左上角相对于母视图的左上角的X轴偏移量。
  */
                 int newScrollX = getScrollX() - deltaX;
-                Log.d("getScrollX()", getScrollX() + "");
-                Log.d("newScrollX()", newScrollX + "");
-
+                Log.e("newScrollX", newScrollX + "");
                 if (newScrollX < -menuWidth) newScrollX = -menuWidth;
                 if (newScrollX > 0) newScrollX = 0;
-                Log.e("Main", "getScrollX: " + getScrollX());
+                Log.e("Main666", "getScrollX: " + getScrollX());
 
                 scrollTo(newScrollX, 0);
 
-
-                Log.e("Main", "getScrollX: " + getScrollX());
+                Log.e("Main777", "getScrollX: " + getScrollX());
                 downX = moveX;
                 break;
             case MotionEvent.ACTION_UP:
@@ -115,37 +114,53 @@ public class SlideMenu extends FrameLayout {
                 if (getScrollX() > -menuWidth / 2) {
                     //关闭菜单
                     closeMenu();
+                    OPPEN = false;
                 } else {
                     //打开菜单
                     openMenu();
+                    OPPEN = true;
                 }
                 break;
         }
         return true;
     }
 
+    /**
+     * 参数 1 ，参数 2 ：指明当前视图移动的距离
+     * 参数 3 ，参数 4 ：指明当前视图要移动的距离
+     * 参数 5 ：指明移动结束需要花费的时间
+     */
     private void closeMenu() {
         scroller.startScroll(getScrollX(), 0, 0 - getScrollX(), 0, 400);
-
-        invalidate();
-    }
-
-    private void openMenu() {
-        scroller.startScroll(getScrollX(), 0, -menuWidth - getScrollX(), 0, 400);
+        //强制重绘 --->draw()--->computeScroll()
         invalidate();
     }
 
     /**
-     * Scroller不主动去调用这个方法
-     * 而invalidate()可以掉这个方法
-     * invalidate->draw->computeScroll
+     * 参数 1 ，参数 2 ：指明当前视图移动的距离
+     * 参数 3 ，参数 4 ：指明当前视图要移动的距离
+     * 参数 5 ：指明移动结束需要花费的时间
+     */
+    private void openMenu() {
+        scroller.startScroll(getScrollX(), 0, -menuWidth - getScrollX(), 0, 400);
+        //强制重绘 --->draw()--->computeScroll()
+        invalidate();
+    }
+
+    /**
+     * Scroller不主动去调用computeScroll()方法，而invalidate()可以调computeScroll()方法，
+     * 在方法内判断是否移动到最终位置，如果没有，继续移动
      */
     @Override
     public void computeScroll() {
         super.computeScroll();
-        //先判断Scroller滚动是否完成,返回true,表示动画没结束
+        //计算当前移动的偏移量 , 并将其保存到 Scoller对象中 , 如果滑动还没有完成返回 true
+        // 先判断Scroller滚动是否完成,返回true,表示动画没结束
+        Log.e("computeScrollOffset()", scroller.computeScrollOffset() + "");
         if (scroller.computeScrollOffset()) {
             //这里调用View的scrollTo()完成实际的滚动,scroller.getCurrX():获取Scroller当前水平滚动的位置
+            //int getCurrX() : 得到计算出的 X偏移量
+            Log.e("scroller.getCurrX()", scroller.getCurrX() + "");
             scrollTo(scroller.getCurrX(), 0);
             //必须调用该方法，否则不一定能看到滚动效果
             invalidate();
@@ -160,12 +175,12 @@ public class SlideMenu extends FrameLayout {
         if (getScrollX() == 0) {
             //需要打开
             openMenu();
+            OPPEN = true;
         } else {
             //需要关闭
             closeMenu();
+            OPPEN = false;
         }
     }
-
-
 }
 
